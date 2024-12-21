@@ -10,6 +10,11 @@ const DevDashboard = () => {
   const [activeTimer, setActiveTimer] = useState(25 * 60); // 25 minutes in seconds
   const [timerInput, setTimerInput] = useState(25); // User input for minutes
 
+  // Beep sound
+  const beepSound = new Audio('/beepbeep.mp3') // Path to your sound file
+
+
+
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
   const [tasks, setTasks] = useState([
@@ -51,6 +56,12 @@ const DevDashboard = () => {
           if (prev <= 1) {
             clearInterval(interval); // Stop timer at 0
             setIsTimerRunning(false); // Automatically pause
+
+               // Play the beep sound
+               beepSound.play().catch((error) => {
+                console.error('Error playing sound:', error);
+              });
+
             return 0; // Ensure it doesn't go below 0
           }
           return prev - 1; // Decrement by 1 second
